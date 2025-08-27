@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escolha quando sua compra chegará - Mercado Livre</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.4;
+        }
+
+        .header {
+            background-color: #ffe600;
+            padding: 12px 0;
+            text-align: center;
+        }
+
+        .logo {
+            height: 34px;
+            width: auto;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: #f5f5f5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .content {
+            flex: 1;
+            padding: 20px 16px 0;
+        }
+
+        .main-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 16px;
+            line-height: 1.3;
+        }
+
+        .address-line {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .location-icon {
+            margin-right: 8px;
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+        }
+
+        .delivery-option {
+            background-color: white;
+            border-radius: 6px;
+            padding: 16px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .radio-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .radio-left {
+            display: flex;
+            align-items: center;
+            flex: 1;
+        }
+
+        .radio-input {
+            width: 20px;
+            height: 20px;
+            margin-right: 12px;
+            accent-color: #3483fa;
+        }
+
+        .delivery-text {
+            font-size: 16px;
+            color: #333;
+            font-weight: 400;
+        }
+
+        .free-text {
+            color: #00a650;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .spacer {
+            flex: 1;
+            min-height: 200px;
+        }
+
+        .bottom-section {
+            background-color: white;
+            padding: 16px;
+            border-top: 1px solid #e6e6e6;
+        }
+
+        .freight-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .freight-label {
+            font-size: 16px;
+            color: #333;
+        }
+
+        .freight-free {
+            color: #00a650;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .continue-button {
+            width: 100%;
+            background-color: #3483fa;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        .continue-button:hover {
+            background-color: #2968c8;
+        }
+
+        .footer {
+            padding: 0 16px 20px;
+            background-color: white;
+        }
+
+        .footer-links {
+            font-size: 12px;
+            color: #666;
+            line-height: 1.5;
+            text-align: left;
+        }
+
+        .footer-links a {
+            color: #666;
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        .company-info {
+            font-size: 12px;
+            color: #666;
+            margin-top: 8px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                max-width: 100%;
+            }
+            
+            .content {
+                padding: 16px 12px 0;
+            }
+            
+            .bottom-section {
+                padding: 12px;
+            }
+            
+            .footer {
+                padding: 0 12px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="https://s3.typebot.io/public/workspaces/cm9koxnp3000tb0fu9vivsbw5/typebots/cmcfcff2w000il704qv3ekb4y/blocks/v2myvgyhlhf9q0kiaq2qtnvg?v=1752887746521" alt="Mercado Livre" class="logo">
+        </div>
+
+        <div class="content">
+            <h1 class="main-title">Escolha quando sua compra chegará</h1>
+            
+            <div class="address-line">
+                <svg class="location-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="#666"/>
+                </svg>
+               <span id="endereco-digitado">Envio para ...</span>
+
+            </div>
+
+            <div class="delivery-option">
+                <div class="radio-container">
+                    <div class="radio-left">
+                        <input type="radio" class="radio-input" checked>
+<span class="delivery-text" id="data-entrega"></span>
+
+                    </div>
+                    <span class="free-text">Grátis</span>
+                </div>
+            </div>
+
+            <div class="spacer"></div>
+        </div>
+
+        <div class="bottom-section">
+            <div class="freight-row">
+                <span class="freight-label">Frete</span>
+                <span class="freight-free">Grátis</span>
+            </div>
+            
+<button class="continue-button" onclick="window.location.href='pagamento.html'">Continuar</button>
+
+        </div>
+
+        <div class="footer">
+            <div class="footer-links">
+                <a href="#">Termos e condições</a> • <a href="#">Como cuidamos da sua privacidade</a> • <a href="#">Acessibilidade</a> • <a href="#">Informações sobre seguros</a> • <a href="#">Blog</a> • <a href="#">Afiliados</a> • <a href="#">Tendências</a>
+            </div>
+            <div class="company-info">
+                Mercado Livre LTDA 123.456.789/0001-12
+            </div>
+        </div>
+    </div>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const rua = localStorage.getItem('rua') || '';
+    const numero = localStorage.getItem('numero') || '';
+    const bairro = localStorage.getItem('bairro') || '';
+    const complemento = localStorage.getItem('complemento') || '';
+    const cidade = localStorage.getItem('cidade') || '';
+    const estado = localStorage.getItem('estado') || '';
+    const cep = localStorage.getItem('cep') || '';
+
+    const enderecoFormatado = `${rua}${numero ? ', ' + numero : ''}${bairro ? ' - ' + bairro : ''}${complemento ? ' (' + complemento + ')' : ''}${cidade ? ' - ' + cidade : ''}${estado ? ' / ' + estado : ''}${cep ? ' - ' + cep : ''}`;
+
+    const span = document.getElementById('endereco-digitado');
+    if (span) {
+      span.textContent = enderecoFormatado ? 'Envio para ' + enderecoFormatado : 'Envio para endereço não informado';
+    }
+  });
+</script>
+<script>
+  // Função para gerar a data de entrega com 3 dias à frente
+  function gerarDataEntrega() {
+    const diasDaSemana = ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado'];
+    const meses = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
+
+    const hoje = new Date();
+    hoje.setDate(hoje.getDate() + 3);
+
+    const diaSemana = diasDaSemana[hoje.getDay()];
+    const dia = hoje.getDate();
+    const mes = meses[hoje.getMonth()];
+
+    return `Chegará ${diaSemana} ${dia} de ${mes}`;
+  }
+
+  // Insere no HTML
+  document.addEventListener('DOMContentLoaded', function () {
+    const dataEntregaEl = document.getElementById('data-entrega');
+    if (dataEntregaEl) {
+      dataEntregaEl.textContent = gerarDataEntrega();
+    }
+  });
+</script>
+
+
+
+
+</body>
+</html>
+

@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ajudando Davi — Doe Agora (com API PIX)</title>
+    <meta
+      name="description"
+      content="Ajude o Davi a continuar lutando. Doações por PIX (com QR automático) ou cartão. Transparência total."
+    />
+    <style>
+      :root {
+        --bg: #ffffff;
+        --text: #0f172a;
+        --muted: #475569;
+        --soft: #e2e8f0;
+        --brand: #68b214;
+        --brand-2: #5aa10e;
+        --radius: 16px;
+        --shadow: 0 8px 30px rgba(2, 6, 23, 0.08);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu,
+          "Helvetica Neue", Arial;
+      }
+      a {
+        color: inherit;
+      }
+      .wrap {
+        max-width: 980px;
+        margin: auto;
+        padding: 20px;
+      }
+      header {
+        position: sticky;
+        top: 0;
+        background: rgba(255, 255, 255, 0.92);
+        backdrop-filter: saturate(180%) blur(8px);
+        border-bottom: 1px solid #f1f5f9;
+        z-index: 50;
+      }
+      header .inner {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 10px 20px;
+      }
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 800;
+        letter-spacing: 0.2px;
+      }
+      .logo svg {
+        width: 28px;
+        height: 28px;
+      }
+      .logo b {
+        color: var(--brand);
+      }
+      .cta-top {
+        margin-left: auto;
+      }
+      button {
+        cursor: pointer;
+        border: 0;
+      }
+      .btn {
+        background: var(--brand);
+        color: #fff;
+        padding: 14px 20px;
+        border-radius: 999px;
+        font-weight: 700;
+        box-shadow: var(--shadow);
+        transition: 0.2s;
+      }
+      .btn:hover {
+        background: var(--brand-2);
+        transform: translateY(-1px);
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 18px;
+        padding: 22px 0;
+      }
+      .hero h1 {
+        font-size: 28px;
+        line-height: 1.2;
+        margin: 2px 0 6px;
+      }
+      .hero p.lead {
+        color: var(--muted);
+        font-size: 16px;
+      }
+      .gallery {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+      .card-img {
+        overflow: hidden;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        background: #000;
+      }
+      .card-img img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+      }
+      @media (min-width: 820px) {
+        .hero {
+          grid-template-columns: 1.05fr 0.95fr;
+          align-items: start;
+        }
+        .gallery {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      .progress {
+        margin: 12px 0 4px;
+      }
+      .bar {
+        height: 16px;
+        background: #e5f3d8;
+        border-radius: 999px;
+        overflow: hidden;
+        box-shadow: inset 0 0 0 1px #dcebd0;
+      }
+      .bar > span {
+        display: block;
+        height: 100%;
+        background: var(--brand);
+        width: 0%;
+      }
+      .kpis {
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+        color: #1f2937;
+        font-weight: 700;
+      }
+      .kpis small {
+        display: block;
+        font-weight: 600;
+        color: var(--muted);
+      }
+
+      .section {
+        margin: 26px 0;
+        padding: 18px 18px;
+        border: 1px solid #eef2f7;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+      }
+      .section h2 {
+        font-size: 20px;
+        margin: 0 0 8px;
+      }
+      .section p {
+        color: #1f2937;
+        line-height: 1.6;
+      }
+
+      .donate-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-top: 10px;
+      }
+      @media (min-width: 720px) {
+        .donate-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      .donate-card {
+        background: #ecf7df;
+        border: 1px solid #e1f0d0;
+        border-radius: 14px;
+        padding: 14px;
+        text-align: center;
+        box-shadow: var(--shadow);
+      }
+      .donate-card h3 {
+        margin: 2px 0 2px;
+        font-size: 20px;
+      }
+      .donate-card button {
+        margin-top: 8px;
+      }
+
+      .badge {
+        display: inline-block;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: #f1f5f9;
+        color: #334155;
+        font-weight: 700;
+        font-size: 12px;
+      }
+
+      .donor-wall {
+        display: grid;
+        gap: 12px;
+      }
+      .donor {
+        display: grid;
+        grid-template-columns: 48px 1fr;
+        gap: 12px;
+        align-items: start;
+        border: 1px solid #eef2f7;
+        border-radius: 14px;
+        padding: 12px;
+      }
+      .avatar {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      /* Ranking */
+      .top-list {
+        list-style: none;
+        padding-left: 0;
+        margin: 8px 0 0;
+        display: grid;
+        gap: 8px;
+      }
+      .top-list li {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 12px;
+        border: 1px solid #eef2f7;
+        border-radius: 12px;
+        background: #fff;
+      }
+      .top-rank {
+        font-weight: 800;
+        width: 28px;
+        text-align: center;
+        color: #64748b;
+      }
+      .top-name {
+        flex: 1;
+        font-weight: 700;
+      }
+      .top-amount {
+        font-weight: 800;
+      }
+
+      /* Mobile sticky info */
+      .mobile-cta {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: #ffffff;
+        border-top: 1px solid #e2e8f0;
+        box-shadow: 0 -6px 24px rgba(2, 6, 23, 0.06);
+        padding: 10px 12px;
+        z-index: 90;
+      }
+      .mobile-cta-inner {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .mobile-cta .btn {
+        padding: 12px 16px;
+      }
+      @media (min-width: 720px) {
+        .mobile-cta {
+          display: none;
+        }
+      }
+
+      /* Toast */
+      .toast {
+        position: fixed;
+        left: 12px;
+        bottom: 76px;
+        background: #111827;
+        color: #fff;
+        border-radius: 12px;
+        padding: 12px 14px;
+        box-shadow: var(--shadow);
+        opacity: 0;
+        transform: translateY(12px);
+        transition: 0.25s;
+        z-index: 120;
+        max-width: 86vw;
+      }
+      .toast.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .toast small {
+        color: #cbd5e1;
+      }
+
+      .notice {
+        background: #fff7ed;
+        border: 1px solid #fde68a;
+        padding: 10px;
+        border-radius: 12px;
+      }
+      .input {
+        width: 100%;
+        padding: 12px 14px;
+        border-radius: 12px;
+        border: 1px solid #e2e8f0;
+      }
+      .copy {
+        display: flex;
+        gap: 8px;
+      }
+
+      /* PIX modal UI */
+      .qrwrap {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+      .qrbox {
+        display: grid;
+        place-items: center;
+        background: #fff;
+        border: 1px solid #eef2f7;
+        border-radius: 14px;
+        padding: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="inner wrap">
+        <div class="logo" aria-label="Ajudando Davi">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle
+              cx="12"
+              cy="12"
+              r="11"
+              stroke="currentColor"
+              stroke-width="2"
+              opacity=".15"
+            />
+            <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" />
+          </svg>
+          <span><b>AJUDANDO</b>&nbsp;DAVI</span>
+        </div>
+        <div class="cta-top">
+          <button class="btn" onclick="scrollToDonate()">DOE AGORA</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <section class="hero">
+        <div>
+          <h1>
+            Cada carinho machuca. Mas o sorriso dele resiste. Hoje, você pode
+            ajudar o Davi a continuar lutando.
+          </h1>
+          <p class="lead">
+            Davi tem 5 anos e enfrenta uma doença grave que exige curativos e
+            cuidados diários. Sua doação vira <b>curativos especiais</b>,
+            <b>pomadas que aliviam a dor</b>, <b>alimentação adequada</b> e
+            alívio para a família.
+          </p>
+
+          <div class="section">
+            <div class="progress">
+              <div
+                class="bar"
+                aria-label="Progresso da arrecadação"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                aria-valuenow="0"
+              >
+                <span id="bar"></span>
+              </div>
+            </div>
+            <div class="kpis" style="margin-top: 10px">
+              <div>
+                <small>Arrecadado — só arrecadamos isso até agora</small>
+                <span id="raised">–</span>
+              </div>
+              <div><small>Meta</small> <span id="goal">–</span></div>
+              <div><small>Restam</small> <span id="daysLeft">–</span> dias</div>
+              <div>
+                <small>Contribuintes</small> <span id="donorCount">–</span>
+              </div>
+            </div>
+            <div style="margin-top: 12px">
+              <button class="btn" onclick="scrollToDonate()">DOE AGORA</button>
+            </div>
+          </div>
+        </div>
+        <div class="gallery">
+          <div class="card-img">
+            <img src="images/img1.png" alt="Davi recebendo curativos" />
+          </div>
+          <div class="card-img">
+            <img src="images/img2.jpg" alt="Davi sorrindo no hospital" />
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>A história do Davi</h2>
+        <div class="stack">
+          <p>
+            Esse garotinho se chama <b>Davi</b>. Ele é forte, amoroso e valente.
+            O tratamento é longo, e cada dia exige materiais e medicamentos
+            específicos. Mesmo com dor, Davi não perde a vontade de viver e
+            brincar.
+          </p>
+          <p>
+            Com sua ajuda, a família consegue manter os curativos em dia,
+            comprar pomadas e garantir uma alimentação que o ajuda a ganhar
+            força. <b>Qualquer valor</b> faz diferença.
+          </p>
+        </div>
+      </section>
+
+      <section id="doar" class="section">
+        <div
+          style="
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+          "
+        >
+          <h2>Com qual valor você pode contribuir?</h2>
+          <span class="badge" id="pct">0% da meta</span>
+        </div>
+        <div class="donate-grid" id="grid"></div>
+        <p class="notice" style="margin-top: 12px">
+          Preferir outro valor? <b>Digite abaixo</b> e clique em Doar.
+        </p>
+        <div class="copy" style="margin-top: 8px">
+          <input
+            id="custom"
+            class="input"
+            inputmode="numeric"
+            placeholder="Ex.: 120,00"
+          />
+          <button class="btn" onclick="donateCustom()">Doar</button>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Como sua doação ajuda</h2>
+        <ul>
+          <li>🩹 Curativos e coberturas especiais (trocas diárias).</li>
+          <li>🧴 Pomadas e medicamentos que aliviam a dor.</li>
+          <li>🍲 Alimentação adequada durante o tratamento.</li>
+          <li>🚗 Deslocamentos para consultas e exames.</li>
+        </ul>
+      </section>
+
+      <section class="section" id="top-donors">
+        <h2>Ranking de doadores (Top 5)</h2>
+        <p style="margin-top: 0">
+          Mostramos apenas quem <b>autorizou</b> aparecer. Obrigado pela
+          generosidade! 🙏
+        </p>
+        <ol class="top-list" id="topList"></ol>
+      </section>
+
+      <div class="footer">
+        <p>
+          © <span id="year"></span> Ajudando Davi. Conteúdo autorizado pela
+          família.
+        </p>
+      </div>
+    </main>
+
+    <!-- Barra inferior (apenas info de meta) -->
+    <div class="mobile-cta" id="mobileCta">
+      <div class="mobile-cta-inner">
+        <span class="badge" id="pct2">–</span>
+        <div class="bar" style="flex: 1; max-width: 320px">
+          <span id="bar2"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal de pagamento (com PIX API) -->
+    <div
+      class="modal"
+      id="modal"
+      style="
+        position: fixed;
+        inset: 0;
+        background: rgba(2, 6, 23, 0.55);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 22px;
+        z-index: 100;
+      "
+    >
+      <div
+        class="modal-card"
+        style="
+          background: #fff;
+          border-radius: 18px;
+          max-width: 560px;
+          width: 100%;
+          box-shadow: var(--shadow);
+          padding: 18px;
+        "
+      >
+        <h3 style="margin: 0 0 10px">Concluir doação</h3>
+        <p>Valor selecionado: <b id="valSelected">–</b></p>
+
+        <div class="notice" style="margin: 12px 0 14px">
+          <b>PIX (recomendado)</b>
+          <div class="qrwrap" style="margin-top: 8px">
+            <div class="qrbox">
+              <canvas
+                id="pixQr"
+                width="240"
+                height="240"
+                aria-label="QR Code PIX"
+              ></canvas>
+            </div>
+            <div class="copy">
+              <input
+                id="pixCode"
+                class="input"
+                placeholder="Código copia e cola"
+                readonly
+              />
+              <button
+                class="btn"
+                style="
+                  background: #fff;
+                  color: #1f2937;
+                  border: 2px solid var(--brand);
+                  padding: 12px 16px;
+                  border-radius: 12px;
+                  font-weight: 800;
+                "
+                onclick="copyPixCode()"
+              >
+                Copiar código
+              </button>
+            </div>
+            <div
+              style="
+                display: flex;
+                gap: 8px;
+                align-items: center;
+                flex-wrap: wrap;
+              "
+            >
+              <span class="badge" id="pixStatus">Gerando PIX…</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="notice">
+          <b>Cartão</b>
+          <p>Se preferir cartão, use o botão abaixo:</p>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap">
+            <a id="cardLink" class="btn" href="#" target="_blank" rel="noopener"
+              >Pagar com cartão</a
+            >
+          </div>
+        </div>
+
+        <div style="text-align: right; margin-top: 12px">
+          <button
+            class="btn"
+            style="
+              background: #fff;
+              color: #1f2937;
+              border: 2px solid var(--brand);
+              padding: 12px 16px;
+              border-radius: 12px;
+              font-weight: 800;
+            "
+            onclick="closeModal()"
+          >
+            Fechar
+          </button>
+        </div>
+      </div>
+    </div>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <canvas id="pixQr" width="240" height="240"></canvas>
+    <input id="pixCode" readonly placeholder="Código PIX" />
+    <button onclick="copyPixCode()">Copiar código</button>
+    <button onclick="downloadQr()">Baixar QR</button>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+    <!-- QRCode lib -->
+    <script>
+      // ================== CONFIG ==================
+      const CONFIG = {
+        goal: 975000,
+        raised: 53275.92,
+        deadline: "2025-09-15",
+        // Links de cartão por valor (se usar PSP que gere link fixo por valor)
+        paymentLinks: {
+          30: "#",
+          50: "#",
+          75: "#",
+          100: "#",
+          150: "#",
+          200: "#",
+          250: "#",
+          300: "#",
+          500: "#",
+          750: "#",
+          1000: "#",
+          1500: "#",
+        },
+        donors: [
+          {
+            name: "Juliana Paiva",
+            msg: "Que Deus abençoe o Davi e sua família. Fiz minha doação com muita fé.",
+            when: "2h",
+          },
+          {
+            name: "Renata Lopes",
+            msg: "Doei com amor. Que o Davi tenha dias com menos dor e mais sorrisos.",
+            when: "40min",
+          },
+          {
+            name: "Paula Teixeira",
+            msg: "Minha ajuda é simples, mas cheia de carinho. Estamos com você, Davi!",
+            when: "10min",
+          },
+          {
+            name: "André Souza",
+            msg: "Enviei minha contribuição e minha oração. Força, campeão!",
+            when: "1h",
+          },
+        ],
+        topDonors: [
+          { name: "Cláudia Silva", amount: 972 },
+          { name: "Márcio Oliveira", amount: 754.93 },
+          { name: "Rosana Almeida", amount: 745 },
+          { name: "Jéssica Rodrigues", amount: 500 },
+          { name: "Danilo Carvalho", amount: 500 },
+        ],
+        recentDonors: [
+          { name: "Juliana Paiva", amount: 50 },
+          { name: "André Souza", amount: 80 },
+          { name: "Renata Lopes", amount: 120.5 },
+          { name: "Paula Teixeira", amount: 175.5 },
+          { name: "Lucas Oliveira", amount: 30 },
+          { name: "Rodrigo Almeida", amount: 67 },
+          { name: "Luana Gonçalves", amount: 45 },
+          { name: "Aparecida Costa", amount: 100 },
+          { name: "Luan Nunes", amount: 75 },
+          { name: "Patrícia Ribeiro", amount: 150 },
+        ],
+        toastsEnabled: true,
+        toastEverySeconds: 10,
+      };
+
+      // ====== API PIX BACKEND ======
+      // Se o backend estiver no mesmo domínio, deixe vazio ('').
+      // Se estiver em outro domínio, coloque a URL, ex.: 'https://api.seusite.com'
+      const BACKEND_URL = "";
+
+      const amounts = [
+        30, 50, 75, 100, 150, 200, 250, 300, 500, 750, 1000, 1500,
+      ];
+      const f = new Intl.NumberFormat("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+      });
+
+      const raisedEl = document.getElementById("raised");
+      const goalEl = document.getElementById("goal");
+      const barEl = document.getElementById("bar");
+      const pctEl = document.getElementById("pct");
+      const daysLeftEl = document.getElementById("daysLeft");
+      const donorCountEl = document.getElementById("donorCount");
+      const gridEl = document.getElementById("grid");
+
+      function calcDaysLeft() {
+        const now = new Date();
+        const end = new Date(CONFIG.deadline + "T23:59:59");
+        const diff = Math.max(0, end - now);
+        return Math.ceil(diff / (1000 * 60 * 60 * 24));
+      }
+
+      function renderProgress() {
+        const pct = Math.min(
+          100,
+          Math.round((CONFIG.raised / CONFIG.goal) * 100)
+        );
+        raisedEl.textContent = f.format(CONFIG.raised);
+        goalEl.textContent = f.format(CONFIG.goal);
+        pctEl.textContent = pct + "% da meta";
+        daysLeftEl.textContent = calcDaysLeft();
+        donorCountEl.textContent = CONFIG.donors.length + "+";
+        requestAnimationFrame(() => {
+          barEl.style.width = pct + "%";
+          barEl.parentElement.setAttribute("aria-valuenow", pct);
+          const badge2 = document.getElementById("pct2");
+          if (badge2) badge2.textContent = pct + "% da meta";
+          const bar2 = document.getElementById("bar2");
+          if (bar2) bar2.style.width = pct + "%";
+        });
+      }
+
+      function card(amount) {
+        const el = document.createElement("div");
+        el.className = "donate-card";
+        el.innerHTML = `<h3>${f.format(
+          amount
+        )}</h3><div><small>valor sugerido</small></div>
+      <button class="btn" onclick="openModal(${amount})">Selecionar</button>`;
+        return el;
+      }
+
+      function renderGrid() {
+        gridEl.innerHTML = "";
+        amounts.forEach((v) => gridEl.appendChild(card(v)));
+      }
+
+      function renderTopDonors() {
+        const el = document.getElementById("topList");
+        if (!el || !CONFIG.topDonors) return;
+        const list = [...CONFIG.topDonors]
+          .sort((a, b) => b.amount - a.amount)
+          .slice(0, 5);
+        el.innerHTML = "";
+        list.forEach((d, i) => {
+          const crown = i === 0 ? " 👑" : "";
+          const li = document.createElement("li");
+          li.innerHTML = `<span class="top-rank">${
+            i + 1
+          }</span><span class="top-name">${
+            d.name
+          }${crown}</span><span class="top-amount">${f.format(
+            d.amount
+          )}</span>`;
+          el.appendChild(li);
+        });
+      }
+
+      function donateCustom() {
+        const raw = document
+          .getElementById("custom")
+          .value.trim()
+          .replace(/\./g, "")
+          .replace(",", ".");
+        const val = Math.max(1, Number(raw));
+        if (!isFinite(val)) return alert("Digite um valor válido.");
+        openModal(Math.round(val * 100) / 100);
+      }
+
+      function openModal(v) {
+        selectedAmount = v;
+        document.getElementById("valSelected").textContent = f.format(v);
+
+        // Link de cartão (se houver)
+        const link =
+          CONFIG.paymentLinks[String(v)] ||
+          CONFIG.paymentLinks[Number(v)] ||
+          "#";
+        const a = document.getElementById("cardLink");
+        a.href = link;
+        a.textContent = link === "#" ? "Link indisponível" : "Pagar com cartão";
+
+        // Abre modal e cria PIX imediato
+        document.getElementById("modal").style.display = "flex";
+        createPix(v);
+      }
+
+      function closeModal() {
+        document.getElementById("modal").style.display = "none";
+        clearInterval(pollTimer);
+        pollTimer = null;
+      }
+
+      function setPixStatus(text) {
+        document.getElementById("pixStatus").textContent = text;
+      }
+
+      // ====== Modal + PIX API integration ======
+      let selectedAmount = null;
+      let pollTimer = null;
+
+      function openModal(v) {
+        selectedAmount = v;
+        document.getElementById("valSelected").textContent = f.format(v);
+
+        const link =
+          CONFIG.paymentLinks[String(v)] ||
+          CONFIG.paymentLinks[Number(v)] ||
+          "#";
+        const a = document.getElementById("cardLink");
+        a.href = link;
+        a.textContent = link === "#" ? "Link indisponível" : "Pagar com cartão";
+
+        document.getElementById("modal").style.display = "flex";
+        createPix(v);
+      }
+
+      function closeModal() {
+        document.getElementById("modal").style.display = "none";
+        clearInterval(pollTimer);
+        pollTimer = null;
+      }
+
+      function setPixStatus(text) {
+        document.getElementById("pixStatus").textContent = text;
+      }
+
+      async function createPix(amount) {
+        clearInterval(pollTimer);
+        pollTimer = null;
+        const canvas = document.getElementById("pixQr");
+        const ctx = canvas.getContext("2d");
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        document.getElementById("pixCode").value = "";
+
+        try {
+          const payload = {
+            amount,
+            paymentMethod: "PIX",
+            customerData: {
+              name: "João Silva",
+              email: "joao@email.com",
+              document: "12345678901",
+              phone: "+551199999999",
+            },
+            metadata: {
+              orderId: "ORDER_" + Date.now(),
+              description: "Doação",
+            },
+          };
+
+          const res = await fetch(`${BACKEND_URL}/payments/deposit/api.php`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          });
+
+          if (!res.ok) throw new Error("Falha ao criar PIX");
+          const data = await res.json();
+
+          const qrCodeText = data?.data?.qrCode || data?.qrCode;
+          if (!qrCodeText) throw new Error("PIX não retornou dados");
+
+          document.getElementById("pixCode").value = qrCodeText;
+          await QRCode.toCanvas(canvas, qrCodeText, { margin: 1, width: 240 });
+
+          // Polling opcional do status se o backend suportar
+          if (data?.data?.id)
+            pollTimer = setInterval(() => pollStatus(data.data.id), 5000);
+        } catch (e) {
+          console.error(e);
+          alert("Erro ao gerar PIX.");
+        }
+      }
+
+      async function pollStatus(id) {
+        try {
+          const r = await fetch(
+            `${BACKEND_URL || ""}/api/pix/status?id=${encodeURIComponent(id)}`
+          );
+          if (!r.ok) return;
+          const s = await r.json();
+          if (!s?.status) return;
+          const st = String(s.status).toLowerCase();
+          if (["approved", "paid", "concluded", "succeeded"].includes(st)) {
+            setPixStatus("Pagamento aprovado! Muito obrigado ❤");
+            clearInterval(pollTimer);
+            pollTimer = null;
+          } else if (st === "expired") {
+            setPixStatus("PIX expirado — gere novamente");
+            clearInterval(pollTimer);
+            pollTimer = null;
+          } else {
+            setPixStatus("Aguardando pagamento");
+          }
+        } catch (e) {
+          /* silencioso */
+        }
+      }
+
+      async function pollStatus(id) {
+        try {
+          const r = await fetch(
+            `${BACKEND_URL || ""}/api/pix/status?id=${encodeURIComponent(id)}`
+          );
+          if (!r.ok) return;
+          const s = await r.json();
+          if (!s || !s.status) return;
+          const st = String(s.status).toLowerCase();
+          if (["approved", "paid", "concluded", "succeeded"].includes(st)) {
+            setPixStatus("Pagamento aprovado! Muito obrigado ❤");
+            clearInterval(pollTimer);
+            pollTimer = null;
+          } else if (st === "expired") {
+            setPixStatus("PIX expirado — gere novamente");
+            clearInterval(pollTimer);
+            pollTimer = null;
+          } else {
+            setPixStatus("Aguardando pagamento");
+          }
+        } catch (e) {
+          /* silencioso */
+        }
+      }
+
+      function copyPixCode() {
+        const i = document.getElementById("pixCode");
+        i.select();
+        i.setSelectionRange(0, 99999);
+        navigator.clipboard.writeText(i.value).then(() => {
+          showToast("Código PIX copiado!");
+        });
+      }
+
+      function downloadQr() {
+        const canvas = document.getElementById("pixQr");
+        const a = document.createElement("a");
+        a.download = `PIX-Davi-${Date.now()}.png`;
+        a.href = canvas.toDataURL("image/png");
+        a.click();
+      }
+
+      function scrollToDonate() {
+        document.getElementById("doar").scrollIntoView({ behavior: "smooth" });
+      }
+
+      // Notificações (manuais)
+      function showToast(msg) {
+        const t = document.getElementById("toast");
+        if (!t) return;
+        t.textContent = msg;
+        t.classList.add("show");
+        setTimeout(() => t.classList.remove("show"), 4000);
+      }
+      function startToasts() {
+        if (
+          !CONFIG.toastsEnabled ||
+          !Array.isArray(CONFIG.recentDonors) ||
+          CONFIG.recentDonors.length === 0
+        )
+          return;
+        let i = 0;
+        setInterval(() => {
+          const d = CONFIG.recentDonors[i++ % CONFIG.recentDonors.length];
+          showToast(`${d.name} doou ${f.format(d.amount)}`);
+        }, (CONFIG.toastEverySeconds || 10) * 1000);
+      }
+
+      // Render
+      document.getElementById("year").textContent = new Date().getFullYear();
+      (function () {
+        const badge2 = document.getElementById("pct2");
+        if (badge2) badge2.textContent = "0% da meta";
+        const bar2 = document.getElementById("bar2");
+        if (bar2) bar2.style.width = "0%";
+      })();
+      renderProgress();
+      renderGrid();
+      renderTopDonors();
+      startToasts();
+    </script>
+  </body>
+</html>

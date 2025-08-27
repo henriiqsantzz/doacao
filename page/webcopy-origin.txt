@@ -1,0 +1,52 @@
+Uri: https://cdn.jsdelivr.net/npm/crypto-js@4.2.0/crypto-js.min.js
+File Name: C:\Downloaded Web Sites\novidadenoticiashoje.shop\npm\crypto-js@4.2.0\crypto-js.min.js
+Content Type: application/javascript
+
+Uri: https://cdn.jsdelivr.net/npm/qrious/dist/qrious.min.js
+File Name: C:\Downloaded Web Sites\novidadenoticiashoje.shop\npm\qrious\dist\qrious.min.js
+Content Type: application/javascript
+
+Uri: https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css
+File Name: C:\Downloaded Web Sites\novidadenoticiashoje.shop\npm\remixicon@3.5.0\fonts\remixicon.css
+Content Type: text/css
+
+Uri: https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.eot?t=1690730386070
+File Name: C:\Downloaded Web Sites\novidadenoticiashoje.shop\npm\remixicon@3.5.0\fonts\remixicon.eot
+Content Type: application/vnd.ms-fontobject
+
+Uri: https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.svg?t=1690730386070
+File Name: C:\Downloaded Web Sites\novidadenoticiashoje.shop\npm\remixicon@3.5.0\fonts\remixicon.svg
+Content Type: image/svg+xml
+
+Uri: https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.ttf?t=1690730386070
+File Name: C:\Downloaded Web Sites\novidadenoticiashoje.shop\npm\remixicon@3.5.0\fonts\remixicon.ttf
+Content Type: font/ttf
+
+Uri: https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.woff2?t=1690730386070
+File Name: C:\Downloaded Web Sites\novidadenoticiashoje.shop\npm\remixicon@3.5.0\fonts\remixicon.woff2
+Content Type: font/woff2
+
+Uri: https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.woff?t=1690730386070
+File Name: C:\Downloaded Web Sites\novidadenoticiashoje.shop\npm\remixicon@3.5.0\fonts\remixicon.woff
+Content Type: font/woff
+
+Uri: https://cdn.tailwindcss.com/3.4.16
+File Name: C:\Downloaded Web Sites\novidadenoticiashoje.shop\3.4.16
+Content Type: text/javascript
+
+Uri: https://cdn.utmify.com.br/scripts/utms/latest.js
+File Name: C:\Downloaded Web Sites\novidadenoticiashoje.shop\scripts\utms\latest.js
+Content Type: text/javascript
+
+Uri: https://novidadenoticiashoje.shop/teste/img/21635D8C-C010-45DA-A5F3-67CADFC40584.jpg
+File Name: C:\Downloaded Web Sites\novidadenoticiashoje.shop\teste\img\21635D8C-C010-45DA-A5F3-67CADFC40584.jpg
+Content Type: image/jpeg
+
+Uri: https://novidadenoticiashoje.shop/teste/pagamento2.php
+File Name: C:\Downloaded Web Sites\novidadenoticiashoje.shop\teste\pagamento2.php.html
+Content Type: text/html
+
+Uri: https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Gov.br_logo.svg/2560px-Gov.br_logo.svg.png
+File Name: C:\Downloaded Web Sites\novidadenoticiashoje.shop\wikipedia\commons\thumb\1\11\Gov.br_logo.svg\2560px-Gov.br_logo.svg.png
+Content Type: image/png
+

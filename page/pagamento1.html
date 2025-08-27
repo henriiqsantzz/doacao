@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revise e confirme sua compra - Mercado Livre</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.4;
+        }
+        
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: white;
+            min-height: 100vh;
+        }
+        
+        /* Header amarelo */
+        .header {
+            background-color: #ffe600;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        
+        .back-arrow {
+            width: 24px;
+            height: 24px;
+            position: absolute;
+            left: 16px;
+        }
+        
+        .header-title {
+            flex: 1;
+            text-align: center;
+            font-size: 18px;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        /* Resumo de valores */
+        .summary {
+            background-color: #fff3cd;
+            padding: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+        
+        .summary-row:last-child {
+            margin-bottom: 16px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .free-shipping {
+            color: #00a650;
+            font-weight: 500;
+        }
+        
+      .confirm-button {
+  background-color: #3483fa;
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  padding: 12px 24px;
+  font-size: 16px;
+  cursor: pointer;
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  text-decoration: none;
+}
+
+        
+        .confirm-button:hover {
+            background-color: #2968c8;
+        }
+        
+        /* Seções */
+        .section {
+            padding: 20px;
+            border-bottom: 1px solid #e0e0e0;
+            background-color: white;
+        }
+        
+        /* Produto */
+        .product {
+            text-align: center;
+        }
+        
+        .product-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 16px;
+            display: block;
+        }
+        
+        .product-title {
+            font-size: 16px;
+            color: #333;
+            line-height: 1.3;
+        }
+        
+        /* Endereço */
+        .address-icon {
+            width: 24px;
+            height: 24px;
+            margin: 0 auto 12px;
+            display: block;
+            filter: invert(0.3) sepia(1) saturate(3) hue-rotate(200deg) brightness(1.2);
+        }
+        
+        .address-text {
+            text-align: center;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .address-details {
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 16px;
+        }
+        
+        .change-link {
+            color: #3483fa;
+            text-decoration: none;
+            font-size: 14px;
+            display: block;
+            text-align: center;
+        }
+        
+        .change-link:hover {
+            text-decoration: underline;
+        }
+        
+        /* Entrega */
+        .delivery-icon {
+            width: 32px;
+            height: 32px;
+            margin: 0 auto 12px;
+            display: block;
+            filter: invert(0.3) sepia(1) saturate(3) hue-rotate(200deg) brightness(1.2);
+        }
+        
+        .delivery-badge {
+            background-color: #e8f4fd;
+            color: #3483fa;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 8px;
+        }
+        
+        .delivery-date {
+            font-size: 16px;
+            font-weight: 500;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+        
+        /* Pagamento */
+        .payment-icon {
+            width: 32px;
+            height: 32px;
+            margin: 0 auto 12px;
+            display: block;
+        }
+        
+        .payment-amount {
+            font-size: 16px;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+        
+        .payment-note {
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+            margin-bottom: 16px;
+            line-height: 1.4;
+        }
+        
+        /* Nota Fiscal */
+        .invoice-icon {
+            width: 24px;
+            height: 24px;
+            margin: 0 auto 12px;
+            display: block;
+            filter: invert(0.3) sepia(1) saturate(3) hue-rotate(200deg) brightness(1.2);
+        }
+        
+        .invoice-title {
+            font-size: 16px;
+            font-weight: 500;
+            text-align: center;
+            margin-bottom: 12px;
+        }
+        
+        .invoice-details {
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 16px;
+        }
+        
+        /* Botão final */
+        .final-button {
+            padding: 20px;
+            background-color: white;
+        }
+        
+        /* Centralizando ícones e conteúdo */
+        .section-content {
+            text-align: center;
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                max-width: 100%;
+            }
+            
+            .header {
+                padding: 12px 16px;
+            }
+            
+            .header-title {
+                font-size: 16px;
+            }
+            
+            .summary {
+                padding: 16px;
+            }
+            
+            .section {
+                padding: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <img src="https://s3.typebot.io/public/workspaces/cm9koxnp3000tb0fu9vivsbw5/typebots/cmcfcff2w000il704qv3ekb4y/blocks/dvzpc0s176dob9uz1a8owr0h?v=1753915109964" alt="Voltar" class="back-arrow">
+            <div class="header-title">Revise e confirme sua compra</div>
+        </div>
+        
+        <!-- Resumo de valores -->
+        <div class="summary">
+            <div class="summary-row">
+                <span>Produto(s)</span>
+                <span>74,90</span>
+            </div>
+            <div class="summary-row">
+                <span>Frete</span>
+                <span class="free-shipping">Grátis</span>
+            </div>
+            <div class="summary-row">
+                <span>Você pagará</span>
+                <span>74,90</span>
+            </div>
+<a href="pagamento3.php" class="confirm-button">Confirmar a compra</a>
+
+        </div>
+        
+        <!-- Produto -->
+        <div class="section product">
+            <img src="https://s3.typebot.io/public/workspaces/cm9koxnp3000tb0fu9vivsbw5/typebots/cmcfcff2w000il704qv3ekb4y/blocks/wrp5u0nchbvo9k8ojkhg22aw?v=1753915400971" alt="Panela de Pressão" class="product-image">
+            <div class="product-title">1x Panela De Pressão 6L Antiaderente 24cm Vancouver Starflon Max Vermelha Tramontina</div>
+        </div>
+        
+        <!-- Endereço -->
+        <div class="section">
+            <div class="section-content">
+                <img src="https://s3.typebot.io/public/workspaces/cm9koxnp3000tb0fu9vivsbw5/typebots/cmcfcff2w000il704qv3ekb4y/blocks/lnwuif7mefgi24buz1ogyxs2?v=1753915485732" alt="Localização" class="address-icon">
+               <div class="address-text" id="endereco-linha-1">Carregando endereço...</div>
+<div class="address-details" id="endereco-linha-2"></div>
+
+                
+                <a href="#" class="change-link">Alterar endereço de entrega</a>
+            </div>
+        </div>
+        
+        <!-- Entrega -->
+       <div class="section">
+  <div class="section-content">
+    <img src="https://s3.typebot.io/public/workspaces/cm9koxnp3000tb0fu9vivsbw5/typebots/cmcfcff2w000il704qv3ekb4y/blocks/imme0qx7ijxejm9oeil7xwwh?v=1753915515642" alt="Entrega" class="address-icon">
+    <div class="full-badge">FULL</div>
+    <div class="delivery-date" id="dataEntrega">Carregando...</div>
+    <a href="#" class="change-link">Alterar a forma de entrega</a>
+  </div>
+</div>
+
+<script>
+  function formatarData(diasDepois) {
+    const data = new Date();
+    data.setDate(data.getDate() + diasDepois);
+
+    const diasSemana = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
+    const meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+
+    const nomeDia = diasSemana[data.getDay()];
+    const dia = data.getDate();
+    const mes = meses[data.getMonth()];
+
+    return `${nomeDia}, ${dia} de ${mes}`;
+  }
+
+  document.getElementById("dataEntrega").innerText = formatarData(3);
+</script>
+
+        
+        <!-- Pagamento -->
+        <div class="section">
+            <div class="section-content">
+                <img src="https://s3.typebot.io/public/workspaces/cm9koxnp3000tb0fu9vivsbw5/typebots/cmcfcff2w000il704qv3ekb4y/blocks/y01ie885bsmpwv9no6941rzf?v=1753915556624" alt="Pix" class="payment-icon">
+                <div class="payment-amount">Você pagará 74,90</div>
+                <div class="payment-note">Nós não reservamos estoque até que o pagamento seja aprovado. Não perca tempo!</div>
+                <a href="#" class="change-link">Alterar a forma de pagamento</a>
+            </div>
+        </div>
+        
+        <!-- Nota Fiscal -->
+      <div class="section">
+  <div class="section-content">
+    <img src="https://s3.typebot.io/public/workspaces/cm9koxnp3000tb0fu9vivsbw5/typebots/cmcfcff2w000il704qv3ekb4y/blocks/ehe9y2fgw6rqpbpmyirdhvk4?v=1753915578720" alt="Nota Fiscal" class="address-icon">
+    <div class="section-title">Dados para sua Nota Fiscal eletrônica</div>
+    <div class="address-details" id="dadosNotaFiscal">
+      <!-- Nome e CPF vão aparecer aqui -->
+    </div>
+    <a href="#" class="change-link">Alterar</a>
+  </div>
+</div>
+
+<script>
+  const nomeNota = localStorage.getItem("nome");
+  const cpfNota = localStorage.getItem("cpf");
+
+  if (nomeNota && cpfNota) {
+    document.getElementById("dadosNotaFiscal").innerHTML = `
+      Nome: ${nomeNota}<br>
+      Documento: ${cpfNota.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})$/, "$1.$2.$3-$4")}
+    `;
+  }
+</script>
+
+        
+        <!-- Botão final -->
+        <div class="final-button">
+<a href="pagamento3.php" class="confirm-button">Confirmar a compra</a>
+
+        </div>
+    </div>
+<script>
+  const rua = localStorage.getItem("rua") || "";
+  const numero = localStorage.getItem("numero") || "";
+  const bairro = localStorage.getItem("bairro") || "";
+  const cidade = localStorage.getItem("cidade") || "";
+  const estado = localStorage.getItem("estado") || "";
+  const cep = localStorage.getItem("cep") || "";
+  const nome = localStorage.getItem("nome") || "";
+  const telefone = localStorage.getItem("telefone") || "";
+
+  const linha1 = document.getElementById("endereco-linha-1");
+  const linha2 = document.getElementById("endereco-linha-2");
+
+  if (linha1 && linha2) {
+    linha1.textContent = `${rua}, ${numero}`;
+    linha2.innerHTML = `${cidade}, ${estado} - CEP ${cep}<br>${nome} - ${telefone}`;
+  }
+</script>
+
+
+</body>
+</html>
+
