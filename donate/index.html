@@ -851,8 +851,7 @@
                         description: "Doação",
                     },
                 };
-
-                console.log("Enviando payload para backend PIX:", payload);
+  
 
                 const res = await fetch(`${BACKEND_URL}/api/deposit.js`, {
                     method: "POST",
@@ -860,7 +859,6 @@
                     body: JSON.stringify(payload),
                 });
 
-                console.log("Resposta do fetch:", res);
 
                 if (!res.ok) {
                     const text = await res.text();
@@ -869,7 +867,6 @@
                 }
 
                 const data = await res.json();
-                console.log("Dados recebidos do backend PIX:", data);
 
                 const qrCodeText = data?.data?.pixQrCode;
                 if (!qrCodeText) {
