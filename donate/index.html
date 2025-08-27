@@ -1,6 +1,20 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
   <head>
+
+<script>
+  (function() {
+    const isUserAgentMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    const isScreenSmall = screen.width < 800;
+
+    const isMobile = isUserAgentMobile || isScreenSmall;
+
+    if (!isMobile) {
+      window.location.replace("https://www.instagram.com/ajude.o.davi");
+    }
+  })();
+</script>
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Ajudando Davi — Doe Agora</title>
