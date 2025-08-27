@@ -834,52 +834,66 @@
       }
 
       async function createPix(amount) {
-        clearInterval(pollTimer);
-        pollTimer = null;
-        const canvas = document.getElementById("pixQr");
-        const ctx = canvas.getContext("2d");
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        document.getElementById("pixCode").value = "";
+    clearInterval(pollTimer);
+    pollTimer = null;
 
-        try {
-          const payload = {
+    const canvas = document.getElementById("pixQr");
+    const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    document.getElementById("pixCode").value = "";
+
+    try {
+        const payload = {
             amount,
             paymentMethod: "PIX",
             customerData: {
-              name: "João Silva",
-              email: "joao@email.com",
-              document: "12345678901",
-              phone: "+551199999999",
+                name: "João Silva",
+                email: "joao@email.com",
+                document: "12345678901",
+                phone: "+551199999999",
             },
             metadata: {
-              orderId: "ORDER_" + Date.now(),
-              description: "Doação",
+                orderId: "ORDER_" + Date.now(),
+                description: "Doação",
             },
-          };
+        };
 
-          const res = await fetch(`${BACKEND_URL}/api/deposit.js`, {
+        console.log("Enviando payload para backend PIX:", payload);
+
+        const res = await fetch(${BACKEND_URL}/api/deposit.js, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload),
-          });
+        });
 
-          if (!res.ok) throw new Error("Falha ao criar PIX");
-          const data = await res.json();
+        console.log("Resposta do fetch:", res);
 
-          const qrCodeText = data?.data?.pix?.qrcode;
-          if (!qrCodeText) throw new Error("PIX não retornou dados");
-
-          document.getElementById("pixCode").value = qrCodeText;
-          await QRCode.toCanvas(canvas, qrCodeText, { margin: 1, width: 240 });
-
-          // Polling opcional do status se o backend suportar
-          if (data?.data?.id)
-            pollTimer = setInterval(() => pollStatus(data.data.id), 5000);
-        } catch (e) {
-          console.error(e);
-          alert("Erro ao gerar PIX.");
+        if (!res.ok) {
+            const text = await res.text();
+            console.error("Erro HTTP ao criar PIX:", res.status, text);
+            throw new Error("Falha ao criar PIX");
         }
-      }
+
+        const data = await res.json();
+        console.log("Dados recebidos do backend PIX:", data);
+
+        const qrCodeText = data?.data?.pix?.qrcode;
+        if (!qrCodeText) {
+            console.error("PIX não retornou dados", data);
+            throw new Error("PIX não retornou dados");
+        }
+
+        document.getElementById("pixCode").value = qrCodeText;
+        await QRCode.toCanvas(canvas, qrCodeText, { margin: 1, width: 240 });
+
+        if (data?.data?.id)
+            pollTimer = setInterval(() => pollStatus(data.data.id), 5000);
+
+    } catch (e) {
+        console.error("Erro na função createPix:", e);
+        alert("Erro ao gerar PIX. Veja o console para detalhes.");
+    }
+}
 
       async function pollStatus(id) {
         try {
