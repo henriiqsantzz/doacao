@@ -683,7 +683,7 @@
       // ====== API PIX BACKEND ======
       // Se o backend estiver no mesmo domínio, deixe vazio ('').
       // Se estiver em outro domínio, coloque a URL, ex.: 'https://api.seusite.com'
-      const BACKEND_URL = "https://ajudeodavi.vercel.app";
+      const BACKEND_URL = "";
 
       const amounts = [
         30, 50, 75, 100, 150, 200, 250, 300, 500, 750, 1000, 1500,
@@ -857,7 +857,7 @@
             },
           };
 
-          const res = await fetch(`${BACKEND_URL}/api/deposit.php`, {
+          const res = await fetch(`${BACKEND_URL}/api/deposit`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload),
