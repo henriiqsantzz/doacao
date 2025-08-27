@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>Ajudando Davi — Doe Agora</title>
         <meta name="description"
-            content="Ajude o Davi a continuar lutando. Doações por PIX (com QR automático) ou cartão. Transparência total." />
+            content="Ajude o Davi a continuar lutando. Doações por PIX. Transparência total." />
         <style>
             :root {
                 --bg: #ffffff;
@@ -768,14 +768,6 @@
             selectedAmount = v;
             document.getElementById("valSelected").textContent = f.format(v);
 
-            // Link de cartão (se houver)
-            const link =
-                CONFIG.paymentLinks[String(v)] ||
-                CONFIG.paymentLinks[Number(v)] ||
-                "#";
-            const a = document.getElementById("cardLink");
-            a.href = link;
-            a.textContent = link === "#" ? "Link indisponível" : "Pagar com cartão";
 
             // Abre modal e cria PIX imediato
             document.getElementById("modal").style.display = "flex";
