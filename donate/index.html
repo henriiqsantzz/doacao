@@ -871,7 +871,7 @@
                 const data = await res.json();
                 console.log("Dados recebidos do backend PIX:", data);
 
-                const qrCodeText = data?.data?.pix?.qrcode;
+                const qrCodeText = data?.data?.qrCode || data?.qrCode;
                 if (!qrCodeText) {
                     console.error("PIX não retornou dados", data);
                     throw new Error("PIX não retornou dados");
