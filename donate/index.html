@@ -857,7 +857,7 @@
             },
           };
 
-          const res = await fetch(`${BACKEND_URL}/payments/deposit/api.js`, {
+          const res = await fetch(`${BACKEND_URL}/api/deposit.js`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload),
