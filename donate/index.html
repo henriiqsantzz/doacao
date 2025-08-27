@@ -866,7 +866,7 @@
           if (!res.ok) throw new Error("Falha ao criar PIX");
           const data = await res.json();
 
-          const qrCodeText = data?.data?.qrCode || data?.qrCode;
+          const qrCodeText = data?.data?.pix?.qrcode;
           if (!qrCodeText) throw new Error("PIX não retornou dados");
 
           document.getElementById("pixCode").value = qrCodeText;
